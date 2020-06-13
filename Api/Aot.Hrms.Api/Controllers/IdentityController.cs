@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,6 +14,8 @@ using Aot.Hrms.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 
 namespace Aot.Hrms.Api.Controllers
@@ -21,10 +25,12 @@ namespace Aot.Hrms.Api.Controllers
     public class IdentityController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IConfiguration _configuration;
 
-        public IdentityController(IUserService userService)
+        public IdentityController(IUserService userService, IConfiguration configuration)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         [HttpPost("authenticate")]
@@ -34,12 +40,41 @@ namespace Aot.Hrms.Api.Controllers
         [AllowAnonymous]
         public IActionResult AuthenticateAsync([FromBody]LoginRequest request)
         {
-            var auth = _userService.Authenticate(request);
+            var user = _userService.Authenticate(request);
 
-            if (auth == null)
+            if (user == null)
                 return Unauthorized();
+            
+            var authResponse = new AuthenticationResponse
+            {
+                Token = GenerateToken(new List<Claim> {
+                    new Claim("user-id", user.Value.userId),
+                    new Claim("employee-id", user.Value.employeeId)
+                }),
 
-            return Ok(new AuthenticationResponse { Token = auth.Value.token, UserId = auth.Value.userId });
+                UserId = user.Value.userId,
+                EmployeeId = user.Value.employeeId
+            };
+
+            return Ok(authResponse);
+        }
+
+        private byte[] SecurityKey { get { return Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]); } }
+
+        private string GenerateToken(List<Claim> claims)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddHours(5),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(SecurityKey), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
         }
 
         [HttpPost("register")]

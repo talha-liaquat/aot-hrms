@@ -26,7 +26,7 @@ namespace Aot.Hrms.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateAsync([FromBody]RegisterEmployeeRequest request)
         {
             if (!ModelState.IsValid)
@@ -58,7 +58,7 @@ namespace Aot.Hrms.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateEmployeeSkillsBulkAsync([Required]string employeeId, [FromBody][Required]EmployeeSkillsRequest request)
         {
             if (!ModelState.IsValid)
@@ -74,7 +74,7 @@ namespace Aot.Hrms.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEmployeeSkillsAsync([Required]string employeeId)
         {
             if (!ModelState.IsValid)
@@ -90,7 +90,7 @@ namespace Aot.Hrms.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetSkillEmployeesAsync([Required]string skillId)
         {
             if (!ModelState.IsValid)

@@ -54,7 +54,7 @@ export class MySkillsComponent implements OnInit {
   onSubmit(form: ngForm): void {
     console.log(form.value);
     
-    var createdBy = JSON.parse(localStorage.getItem('currentUser'))["userId"];
+    var createdBy = JSON.parse(localStorage.getItem('currentUser'))["employeeId"];
     
     this.employeeService.addSkills(createdBy, form.value.title)
     .pipe(first())
