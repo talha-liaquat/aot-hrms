@@ -11,6 +11,11 @@ import { RegisterComponent } from './register/register.component';
 import { MygroupsComponent } from './mygroups/mygroups.component';
 import { CreategroupComponent } from './creategroup/creategroup.component';
 import { JoingroupComponent } from './joingroup/joingroup.component';
+import { SkillsComponent } from './skills/skills.component';
+import { InvitationsComponent } from './invitations/invitations.component';
+import { SearchComponent } from './search/search.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MySkillsComponent } from './my-skills/my-skills.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +25,12 @@ import { JoingroupComponent } from './joingroup/joingroup.component';
     RegisterComponent,
     MygroupsComponent,
     CreategroupComponent,
-    JoingroupComponent
+    JoingroupComponent,
+    SkillsComponent,
+    InvitationsComponent,
+    SearchComponent,
+    DashboardComponent,
+    MySkillsComponent
   ],
   imports: [
     BrowserModule,

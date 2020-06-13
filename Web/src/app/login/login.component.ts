@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate(['/register']);
+                    this.router.navigate(['/dashboard']);
                 },
                 error => {
                     this.error = error;
