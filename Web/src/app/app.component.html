@@ -1,0 +1,13 @@
+<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/mygroups">My Groups</a>
+        <a class="nav-item nav-link" routerLink="/creategroup">Create new Group</a>
+        <a class="nav-item nav-link" routerLink="/joingroup">Join Group!</a>
+        <a class="nav-item nav-link" routerLink="/" (click)="logout()">Logout</a>
+    </div>
+</nav>
+
+<!-- main app container -->
+
+    <router-outlet></router-outlet>

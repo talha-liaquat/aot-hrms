@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aot.Hrms.Api", "Aot.Hrms.Api\Aot.Hrms.Api.csproj", "{0B0ECEDC-C382-444F-B876-AD91F3978FE5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aot.Hrms.Dtos", "Aot.Hrms.Dtos\Aot.Hrms.Dtos.csproj", "{F10C5AE8-3CAB-42CF-8362-55E8883E9C67}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aot.Hrms.Contracts", "Aot.Hrms.Contracts\Aot.Hrms.Contracts.csproj", "{9D1EA9EC-BCB3-4014-BF36-8766470BC717}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aot.Hrms.Api.Tests", "Aot.Hrms.Api.Tests\Aot.Hrms.Api.Tests.csproj", "{906ADA51-154A-4DB8-8E98-26CD7C1C8976}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aot.Hrms.Services", "Aot.Hrms.Services\Aot.Hrms.Services.csproj", "{C2664ADA-58B9-4887-8B83-4BCC6DFA56D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aot.Hrms.Repositories", "Aot.Hrms.Repositories\Aot.Hrms.Repositories.csproj", "{6D083B04-ECBD-4208-A0B9-A55053ACD28B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aot.Hrms.Entities", "Aot.Hrms.Entities\Aot.Hrms.Entities.csproj", "{478ADAE5-0A1A-4836-BF3D-889D09D90537}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B0ECEDC-C382-444F-B876-AD91F3978FE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B0ECEDC-C382-444F-B876-AD91F3978FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B0ECEDC-C382-444F-B876-AD91F3978FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B0ECEDC-C382-444F-B876-AD91F3978FE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F10C5AE8-3CAB-42CF-8362-55E8883E9C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F10C5AE8-3CAB-42CF-8362-55E8883E9C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F10C5AE8-3CAB-42CF-8362-55E8883E9C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F10C5AE8-3CAB-42CF-8362-55E8883E9C67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D1EA9EC-BCB3-4014-BF36-8766470BC717}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D1EA9EC-BCB3-4014-BF36-8766470BC717}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D1EA9EC-BCB3-4014-BF36-8766470BC717}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D1EA9EC-BCB3-4014-BF36-8766470BC717}.Release|Any CPU.Build.0 = Release|Any CPU
+		{906ADA51-154A-4DB8-8E98-26CD7C1C8976}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{906ADA51-154A-4DB8-8E98-26CD7C1C8976}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{906ADA51-154A-4DB8-8E98-26CD7C1C8976}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{906ADA51-154A-4DB8-8E98-26CD7C1C8976}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2664ADA-58B9-4887-8B83-4BCC6DFA56D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2664ADA-58B9-4887-8B83-4BCC6DFA56D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2664ADA-58B9-4887-8B83-4BCC6DFA56D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2664ADA-58B9-4887-8B83-4BCC6DFA56D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D083B04-ECBD-4208-A0B9-A55053ACD28B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D083B04-ECBD-4208-A0B9-A55053ACD28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D083B04-ECBD-4208-A0B9-A55053ACD28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D083B04-ECBD-4208-A0B9-A55053ACD28B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{478ADAE5-0A1A-4836-BF3D-889D09D90537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{478ADAE5-0A1A-4836-BF3D-889D09D90537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{478ADAE5-0A1A-4836-BF3D-889D09D90537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{478ADAE5-0A1A-4836-BF3D-889D09D90537}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7689985-6755-4356-B43C-A2695BBC22C3}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aot.Hrms.Dtos\Aot.Hrms.Dtos.csproj" />
+    <ProjectReference Include="..\Aot.Hrms.Entities\Aot.Hrms.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
