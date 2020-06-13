@@ -28,7 +28,11 @@ namespace Aot.Hrms.Services
             var user = _userRepository.GetUser(request.Username, request.Password);
 
             if (user != null)
-                return (GenerateToken(new List<Claim> { new Claim("user-id", user.Id) }), user.Id);
+                return (GenerateToken(new List<Claim> { 
+                    new Claim("user-id", user.Id),
+                    new Claim("employee-id", user.EmployeeId)
+                }), 
+                user.Id);
 
             return null;
         }

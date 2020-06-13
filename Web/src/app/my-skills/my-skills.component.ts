@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
+import { LookupService } from '../_services/lookup.service';
+import { EmployeeService } from '../_services/employee.service';
 
 @Component({
   selector: 'app-my-skills',
@@ -7,9 +12,60 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MySkillsComponent implements OnInit {
 
-  constructor() { }
+    public value: string[];
+
+
+     // define the JSON of data
+     public countries: { [key: string]: Object; }[];
+      // maps the local data column to fields property
+      public localFields: Object = { text: 'title', value: 'id' };
+      // set the placeholder to MultiSelect Dropdown input element
+      public localWaterMark: string = 'Please select your skill(s)';
+
+      loading = false;
+      submitted = false;
+      returnUrl: string;
+      email: string;
+      title: string;
+      error = '';
+    
+      constructor(
+        private formBuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private router: Router,
+        private lookupService: LookupService,
+        private employeeService: EmployeeService) { 
+      }
 
   ngOnInit() {
+     this.lookupService.getAll()
+    .pipe(first())
+    .subscribe(
+        data => {
+          this.countries = data;
+        },
+        error => {
+            this.error = error;
+            this.loading = false;
+        });
+      
+  }
+
+  onSubmit(form: ngForm): void {
+    console.log(form.value);
+    
+    var createdBy = JSON.parse(localStorage.getItem('currentUser'))["userId"];
+    
+    this.employeeService.addSkills(createdBy, form.value.title)
+    .pipe(first())
+    .subscribe(
+        data => {
+          this.countries = data;
+        },
+        error => {
+            this.error = error;
+            this.loading = false;
+        });
   }
 
 }

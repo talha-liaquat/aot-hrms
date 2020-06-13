@@ -25,5 +25,9 @@ namespace Aot.Hrms.Entities
         [Required]
         [StringLength(250)]
         public string Email { get; set; }
+        [Required]
+        public string EmployeeId { get; set; }
+
+        public virtual Employee Employee { get; set; }
     }
 }

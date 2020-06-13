@@ -8,6 +8,7 @@ namespace Aot.Hrms.Contracts.Repositories
     public interface IEmployeeSkillRepository
     {
         public Task<int> CreateAsync(Entities.EmployeeSkill employeeSkill);
+        public Task<int> CreateManyAsync(List<Entities.EmployeeSkill> employeeSkills);
         public Task<int> UpdateAsync(Entities.EmployeeSkill employeeSkill);
         public Entities.EmployeeSkill GetById(string id);
         public IList<Entities.EmployeeSkill> GetByEmployeeId(string employeeId);

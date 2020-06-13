@@ -1,1 +1,13 @@
 <p>my-skills works!</p>
+
+<form #form='ngForm' (ngSubmit)="onSubmit(form)">
+    <div class="form-group">         
+        <ejs-multiselect id='localData' name='title'  #local='ngModel' [(value)]='id' [(ngModel)]='value' [dataSource]='countries' [fields]='localFields' [placeholder]='localWaterMark'></ejs-multiselect>
+
+        <button type="submit" ejs-button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+
+    </div>
+  </form>

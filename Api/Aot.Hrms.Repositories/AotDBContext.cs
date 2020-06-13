@@ -63,6 +63,7 @@ namespace Aot.Hrms.Repositories
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Name).IsRequired();
+                entity.Property(e => e.EmployeeId).IsRequired();
                 entity.Property(e => e.IsActive).HasDefaultValue(true);
                 entity.Property(e => e.CreateOn).HasDefaultValue(DateTime.UtcNow);
             });

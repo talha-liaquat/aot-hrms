@@ -20,21 +20,26 @@ namespace Aot.Hrms.Services
             _employeeSkillRepository = employeeSkillRepository ?? throw new ArgumentNullException(nameof(employeeSkillRepository));
         }
 
-        public async Task<string> AssignSkillAsync(string employeeId, string skillId, string userId)
+        public async Task<string> AssignSkillAsync(string employeeId, List<string> skillIds, string userId)
         {
-            var employeeSkill = new EmployeeSkill
+            var listEmployeeSkill = new List<EmployeeSkill>();
+
+            foreach (var skillId in skillIds)
             {
-                Id = Guid.NewGuid().ToString(),
-                CreatedBy = userId,
-                CreateOn = DateTime.UtcNow,
-                IsActive = true,
-                SkillId = skillId,
-                EmployeeId = employeeId,
-            };
+                listEmployeeSkill.Add(new EmployeeSkill
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    CreatedBy = userId,
+                    CreateOn = DateTime.UtcNow,
+                    IsActive = true,
+                    SkillId = skillId,
+                    EmployeeId = employeeId,
+                });
+            }
 
-            await _employeeSkillRepository.CreateAsync(employeeSkill);
+            await _employeeSkillRepository.CreateManyAsync(listEmployeeSkill);
 
-            return employeeSkill.Id;
+            return null;
         }
 
         public async Task<EmployeeDto> RegisterAsync(RegisterEmployeeRequest request)

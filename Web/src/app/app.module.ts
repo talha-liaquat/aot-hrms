@@ -16,6 +16,8 @@ import { InvitationsComponent } from './invitations/invitations.component';
 import { SearchComponent } from './search/search.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MySkillsComponent } from './my-skills/my-skills.component';
+import { MultiSelectAllModule } from '@syncfusion/ej2-angular-dropdowns';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { MySkillsComponent } from './my-skills/my-skills.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MultiSelectAllModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

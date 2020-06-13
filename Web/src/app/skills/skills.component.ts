@@ -34,7 +34,7 @@ export class SkillsComponent implements OnInit {
         .pipe(first())
         .subscribe(
             data => {
-                this.router.navigate(['/dashboard']);
+                this.router.navigate(['/skills']);
             },
             error => {
                 this.error = error;

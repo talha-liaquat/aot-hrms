@@ -14,6 +14,12 @@ namespace Aot.Hrms.Dtos
         public bool IsAdmin { get; set; }
     }
 
+    public class EmployeeSkillsRequest
+    {
+        [Required]
+        public List<string> SkillIds { get; set; }
+    }
+
     public class EmployeeDto
     {
         [Required]

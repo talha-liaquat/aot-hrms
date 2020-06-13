@@ -18,10 +18,37 @@ namespace Aot.Hrms.Api
         {
             using (var context = new AotDBContext())
             {
-                // Creates the database if not exists
                 context.Database.EnsureCreated();
 
-                // Saves changes
+                if (!context.User.Any(x => x.Username == "admin"))
+                {
+                    var employeeId = Guid.NewGuid().ToString();
+                    context.Employee.Add(new Entities.Employee
+                    {
+                        Id = employeeId,
+                        CreatedBy = employeeId,
+                        CreateOn = DateTime.Now,
+                        Email = "talha.liaquat@gmail.com",
+                        IsActive = true,
+                        IsAdmin = true,
+                        Name = "admin",
+                        IsEmailVerified = true
+                    });
+
+                    var userId = Guid.NewGuid().ToString();
+                    context.User.Add(new Entities.User
+                    {
+                        Id = userId,
+                        CreatedBy = employeeId,
+                        CreateOn = DateTime.Now,
+                        EmployeeId = employeeId,
+                        IsActive = true,
+                        Name = "admin",
+                        Password = "admin",
+                        Username = "admin",
+                        Email = "talha.liaquat@gmail.com"
+                    });
+                }
                 context.SaveChanges();
             }
 

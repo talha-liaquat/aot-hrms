@@ -11,9 +11,9 @@ namespace Aot.Hrms.Contracts.Services
     {
         public Task<EmployeeDto> RegisterAsync(RegisterEmployeeRequest request);
         public Task<EmployeeDto> VerifyAsync(VerifyEmployeeRequest request);
-        public Task<string> AssignSkillAsync(string employeeId, string skillId, string userId);
+        public Task<string> AssignSkillAsync(string employeeId, List<string> skillIds, string userId);
         public IList<SkillDto> GetSkillsByEmployeeId(string employeeId);
         public IList<EmployeeDto> GetEmployeeBySkillId(string skillId);
-        public Task<string> UnAssignSkillAsync(UnAssignSkillRequest request);
+        public Task<string> UnAssignSkillAsync(UnAssignSkillRequest request);        
     }
 }

@@ -23,7 +23,7 @@ export class LookupService {
       return this.currentUserSubject.value;
   }
 
-  create  (title: string, createdBy: string) {
+  create(title: string, createdBy: string) {
       return this.http.post<any>(environment.apiBaseUrl + "v1/Lookups/skills", { title, createdBy }, {
           headers: new HttpHeaders({
                'Content-Type':  'application/json'
@@ -32,6 +32,17 @@ export class LookupService {
           .pipe(map(skill => {
               return skill;
           }));
+  }
+
+  getAll() {
+    return this.http.get<any>(environment.apiBaseUrl + "v1/Lookups/skills", {
+        headers: new HttpHeaders({
+             'Content-Type':  'application/json'
+           })
+      })
+        .pipe(map(skill => {
+            return skill;
+        }));
   }
 
   getUserId(){

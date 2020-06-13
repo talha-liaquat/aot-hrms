@@ -17,6 +17,16 @@ namespace Aot.Hrms.Repositories
             return await context.SaveChangesAsync();
         }
 
+        public async Task<int> CreateManyAsync(List<Entities.EmployeeSkill> employeeSkills)
+        {
+            using var context = new AotDBContext();
+            foreach (var employeeSkill in employeeSkills)
+            {
+                await context.EmployeeSkills.AddAsync(employeeSkill);
+            }
+            return await context.SaveChangesAsync();
+        }
+
         public IList<EmployeeSkill> GetByEmployeeId(string employeeId)
         {
             using var context = new AotDBContext();

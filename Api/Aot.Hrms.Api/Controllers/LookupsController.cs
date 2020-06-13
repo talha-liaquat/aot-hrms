@@ -25,7 +25,7 @@ namespace Aot.Hrms.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> CreateSkillAsync([FromBody]RegisterSkillRequest request)
         {
             if (!ModelState.IsValid)
@@ -41,7 +41,7 @@ namespace Aot.Hrms.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> GetSkillseAsync()
         {
             if (!ModelState.IsValid)
