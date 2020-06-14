@@ -20,6 +20,8 @@ namespace Aot.Hrms.Repositories
         public async Task<int> CreateManyAsync(List<Entities.EmployeeSkill> employeeSkills)
         {
             using var context = new AotDBContext();
+            var currentSkills = context.EmployeeSkills.Where(x => x.EmployeeId == employeeSkills.First().EmployeeId);
+            context.EmployeeSkills.RemoveRange(currentSkills);
             foreach (var employeeSkill in employeeSkills)
             {
                 await context.EmployeeSkills.AddAsync(employeeSkill);

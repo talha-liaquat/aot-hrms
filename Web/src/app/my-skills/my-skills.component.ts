@@ -16,7 +16,7 @@ export class MySkillsComponent implements OnInit {
 
 
      // define the JSON of data
-     public countries: { [key: string]: Object; }[];
+     public skills: { [key: string]: Object; }[];
       // maps the local data column to fields property
       public localFields: Object = { text: 'title', value: 'id' };
       // set the placeholder to MultiSelect Dropdown input element
@@ -38,16 +38,33 @@ export class MySkillsComponent implements OnInit {
       }
 
   ngOnInit() {
-     this.lookupService.getAll()
+    var createdBy = JSON.parse(localStorage.getItem('currentUser'))["employeeId"];
+
+    this.employeeService.getSkills( createdBy)
     .pipe(first())
     .subscribe(
         data => {
-          this.countries = data;
+          var tempArr = data.map(function(a) {return a.id;});
+          console.log(tempArr);
+          this.value = tempArr;
         },
         error => {
             this.error = error;
             this.loading = false;
         });
+
+     this.lookupService.getAll()
+    .pipe(first())
+    .subscribe(
+        data => {
+          this.skills = data;
+        },
+        error => {
+            this.error = error;
+            this.loading = false;
+        });
+        
+
       
   }
 
@@ -60,7 +77,7 @@ export class MySkillsComponent implements OnInit {
     .pipe(first())
     .subscribe(
         data => {
-          this.countries = data;
+          this.skills = data;
         },
         error => {
             this.error = error;
