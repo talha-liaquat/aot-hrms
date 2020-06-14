@@ -40,6 +40,11 @@ namespace Aot.Hrms.Services
             if(existingUser != null)
                 throw new InsertFailedException("Username already existing in the System!");
 
+            existingUser = _userRepository.GetUserByEmployeeId(employeeId);
+
+            if (existingUser != null)
+                throw new InsertFailedException("User already registered in the System!");
+
             var newUserId = Guid.NewGuid().ToString();
             var password = CryptoHelper.Hash(newUserId + request.Username, _configuration["SecurityConfiguraiton:HashKey"]);
 

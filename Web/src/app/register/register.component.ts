@@ -58,9 +58,7 @@ ngOnInit() {
           },
           error => {
               this.error = error;
-              console.log(error);
               this.loading = false;
-              console.log(error);
           });
   }
 

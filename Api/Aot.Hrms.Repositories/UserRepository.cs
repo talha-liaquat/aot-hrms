@@ -23,6 +23,12 @@ namespace Aot.Hrms.Repositories
             return context.User.SingleOrDefault(x => x.Username.ToLower() == username.ToLower() && x.Password == password);
         }
 
+        public User GetUserByEmployeeId(string employeeId)
+        {
+            using var context = new AotDBContext();
+            return context.User.SingleOrDefault(x => x.EmployeeId == employeeId);
+        }
+
         public User GetUserByUsername(string username)
         {
             using var context = new AotDBContext();

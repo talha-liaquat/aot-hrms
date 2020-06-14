@@ -45,7 +45,7 @@ namespace Aot.Hrms.Api.Controllers
             {
                 Email = newEmploee.Email,
                 EmployeeId = newEmploee.Id,
-                ValidUntil = DateTime.Now.AddDays(1)
+                ValidUntil = DateTime.Now.AddMinutes(15)
             };
 
             var state = CryptoHelper.Encode(CryptoHelper.Encrypt(CryptoHelper.Serialize(stateObj), _configuration["SecurityConfiguraiton:EncryptionKey"]));
@@ -55,7 +55,7 @@ namespace Aot.Hrms.Api.Controllers
                 To = new List<string> { newEmploee.Email },
                 Subject = "AOT Invitation Email Verification",
                 IsHtml = true,
-                Body = $"Hi {newEmploee.Name},<br/><br/>Welcome to AOT.<br/><br />Please click on below link to verify your email address.<br/><br/><a href=\"https://localhost:44300/api/v1/Employees/verify?state={state}\">Please click here to verify</a><br/><br/>Thanks, AOT Team"
+                Body = $"Hi {newEmploee.Name},<br/><br/>Welcome to AOT.<br/><br />Please click on below link to verify your email address. Token validity: {stateObj.ValidUntil.ToShortTimeString()}.<br/><br/><a href=\"https://localhost:44300/api/v1/Employees/verify?state={state}\">Please click here to verify</a><br/><br/>Thanks, AOT Team"
             });
 
             return Ok(newEmploee);
@@ -73,7 +73,10 @@ namespace Aot.Hrms.Api.Controllers
                 return BadRequest();
 
             var stateObj = CryptoHelper.Deserialize<EmailVerificationDto>(CryptoHelper.Decrypt(CryptoHelper.Decode(state), _configuration["SecurityConfiguraiton:EncryptionKey"]));
-            
+
+            if (stateObj.ValidUntil < DateTime.UtcNow)
+                return BadRequest("Token has been expired. Please contact System Administrator!");
+
             var updatedEmploee = await _employeeService.VerifyAsync(new VerifyEmployeeRequest { EmployeeId = stateObj.EmployeeId });
 
             stateObj.ValidUntil.AddDays(15);

@@ -14,11 +14,13 @@ namespace Aot.Hrms.Services
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IEmployeeSkillRepository _employeeSkillRepository;
+        private readonly IUserRepository _userRepository;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, IEmployeeSkillRepository employeeSkillRepository)
+        public EmployeeService(IEmployeeRepository employeeRepository, IEmployeeSkillRepository employeeSkillRepository, IUserRepository userRepository)
         {
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
             _employeeSkillRepository = employeeSkillRepository ?? throw new ArgumentNullException(nameof(employeeSkillRepository));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         public async Task<string> AssignSkillAsync(string employeeId, List<string> skillIds, string userId)
@@ -91,6 +93,15 @@ namespace Aot.Hrms.Services
         public async Task<EmployeeDto> VerifyAsync(VerifyEmployeeRequest request)
         {
             var employee = _employeeRepository.GetById(request.EmployeeId);
+
+            if (employee == null)
+                throw new ValidationException("Record does not exist. Please contact system administrator");
+
+            var existingUser = _userRepository.GetUserByEmployeeId(employee.Id);
+            
+            if(existingUser != null)
+                throw new ValidationException("User alrady Validated!");
+
             employee.IsEmailVerified = true;
             await _employeeRepository.UpdateAsync(employee);
             return MapEmployeeDto(employee);

@@ -10,5 +10,6 @@ namespace Aot.Hrms.Contracts.Repositories
         public Task<int> CreateAsync(Entities.User user);
         public Entities.User GetUser(string username, string password);
         public Entities.User GetUserByUsername(string username);
+        public Entities.User GetUserByEmployeeId(string employeeId);
     }
 }

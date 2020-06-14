@@ -59,9 +59,6 @@ onSubmit(form: ngForm): void {
   .subscribe(
       data => {
         this.employees = data;
-        // var tempArr = data.map(function(a) {return a.id;});
-        // console.log(tempArr);
-        // this.value = tempArr;
       },
       error => {
           this.error = error;
