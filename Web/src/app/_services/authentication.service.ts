@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { map, catchError, retry } from 'rxjs/operators';
 import { environment } from './../../environments/environment';
 import { User } from '../_models';
 import * as jwt_decode from 'jwt-decode';
@@ -39,8 +39,8 @@ export class AuthenticationService {
                  'Content-Type':  'application/json'
                })
           })
-            .pipe(map(data => {
-                return data;
+            .pipe(map(user => {
+                return true;
             }));
     }
 

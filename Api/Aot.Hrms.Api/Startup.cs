@@ -86,11 +86,12 @@ namespace Aot.Hrms.Api
         {
             app.UseCors("MyPolicy");
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            app.UseHttpStatusCodeExceptionMiddleware();
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
