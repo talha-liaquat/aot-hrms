@@ -3,9 +3,9 @@
     <div class="navbar-nav">
         <a class="nav-item nav-link" routerLink="/dashboard">Dashboard</a>
 
-        <a class="nav-item nav-link" routerLink="/invitations">Invitations</a>
-        <a class="nav-item nav-link" routerLink="/skills">Skills</a>
-        <a class="nav-item nav-link" routerLink="/search">Search</a>
+        <a class="nav-item nav-link" routerLink="/invitations" *ngIf="isAdmin">Invitations</a>
+        <a class="nav-item nav-link" routerLink="/skills" *ngIf="isAdmin">Skills</a>
+        <a class="nav-item nav-link" routerLink="/search" *ngIf="isAdmin">Search</a>
 
         <a class="nav-item nav-link" routerLink="/mySkills">My Skills</a>
         

@@ -9,11 +9,17 @@ import * as jwt_decode from 'jwt-decode';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
+    private isAdminSubject: BehaviorSubject<boolean>;
+
     public currentUser: Observable<User>;
+    public isAdmin: Observable<boolean>;
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
+
+        this.isAdminSubject = new BehaviorSubject<boolean>(this.getClaims('is-admin'));
+        this.isAdmin = this.isAdminSubject.asObservable();
     }
 
     public get currentUserValue(): User {
@@ -29,6 +35,8 @@ export class AuthenticationService {
             .pipe(map(user => {
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
+                let isAdmin = this.getClaims("is-admin");
+                this.isAdminSubject.next(isAdmin == "true");
                 return user;
             }));
     }
@@ -45,8 +53,9 @@ export class AuthenticationService {
     }
 
     getClaims(key: string){
+        console.log('checking claims');
         var currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        var decoded = jwt_decode(currentUserSubject.value.Token); 
+        var decoded = jwt_decode(currentUserSubject.value.token); 
         console.log(decoded);
         return decoded[key];
     }

@@ -50,7 +50,8 @@ namespace Aot.Hrms.Api.Controllers
             {
                 Token = GenerateToken(new List<Claim> {
                     new Claim("user-id", user.Value.userId),
-                    new Claim("employee-id", user.Value.employeeId)
+                    new Claim("employee-id", user.Value.employeeId),
+                    new Claim("is-admin", user.Value.isAdmin.ToString().ToLower())
                 }),
 
                 UserId = user.Value.userId,

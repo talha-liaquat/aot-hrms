@@ -13,14 +13,16 @@ namespace Aot.Hrms.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public UserService(IUserRepository userRepository, IConfiguration configuration)
+        public UserService(IUserRepository userRepository, IConfiguration configuration, IEmployeeRepository employeeRepository)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
         }
 
-        public (string userId, string employeeId)? Authenticate(LoginRequest request)
+        public (string userId, string employeeId, bool isAdmin)? Authenticate(LoginRequest request)
         {
             var user = _userRepository.GetUserByUsername(request.Username);
 
@@ -30,7 +32,9 @@ namespace Aot.Hrms.Services
             if (user.Password != CryptoHelper.Hash(user.Id + request.Username, _configuration["SecurityConfiguraiton:HashKey"]))
                 throw new ValidationException("Authentication Failed");
 
-            return (user.Id, user.EmployeeId);
+            var employee = _employeeRepository.GetById(user.EmployeeId);
+
+            return (user.Id, user.EmployeeId, employee.IsAdmin);
         }
 
         public async Task<string> RegisterUserAsync(RegisterUserRequest request, string employeeId)

@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'skills', component: SkillsComponent },  
   { path: 'search', component: SearchComponent },  
   { path: 'mySkills', component: MySkillsComponent },  
-   { path: '**', redirectTo: 'dashboard' }
+   { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({
