@@ -12,25 +12,36 @@ namespace Aot.Hrms.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        
+        private readonly IConfiguration _configuration;
+
         public UserService(IUserRepository userRepository, IConfiguration configuration)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public (string userId, string employeeId)? Authenticate(LoginRequest request)
         {
-            var user = _userRepository.GetUser(request.Username, request.Password);
+            var user = _userRepository.GetUserByUsername(request.Username);
 
-            if (user != null)
-                return (user.Id, user.EmployeeId);
+            if (user == null)
+                throw new ValidationException("Authentication Failed");
 
-            return null;
+            if (user.Password != CryptoHelper.Hash(user.Id + request.Username, _configuration["SecurityConfiguraiton:HashKey"]))
+                throw new ValidationException("Authentication Failed");
+
+            return (user.Id, user.EmployeeId);
         }
 
-        public async Task<string> RegisterUserAsync(RegisterUserRequest request)
+        public async Task<string> RegisterUserAsync(RegisterUserRequest request, string employeeId)
         {
+            var existingUser = _userRepository.GetUserByUsername(request.Username);
+
+            if(existingUser != null)
+                throw new InsertFailedException("Username already existing in the System!");
+
             var newUserId = Guid.NewGuid().ToString();
+            var password = CryptoHelper.Hash(newUserId + request.Username, _configuration["SecurityConfiguraiton:HashKey"]);
 
             var rowsEffected = await _userRepository.CreateAsync(new Entities.User
             {
@@ -39,9 +50,10 @@ namespace Aot.Hrms.Services
                 CreateOn = DateTime.UtcNow,
                 IsActive = true,
                 Name = request.Name,
-                Password = request.Password,
+                Password = password,
                 Email = request.Email,
-                Username = request.Username
+                Username = request.Username,
+                EmployeeId = employeeId
             });
 
             if (rowsEffected != 1)

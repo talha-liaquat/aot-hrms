@@ -55,6 +55,17 @@ export class EmployeeService {
             }));
           }
 
+    getEmployees(skillId: string) {
+      return this.http.get<any>(environment.apiBaseUrl + "v1/Employees/skills/"+skillId, {
+          headers: new HttpHeaders({
+                'Content-Type':  'application/json'
+              })
+        })
+          .pipe(map(employee => {
+              return employee;
+          }));
+        }
+
   getClaims(key: string){
       var currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
       var decoded = jwt_decode(currentUserSubject.value.Token); 

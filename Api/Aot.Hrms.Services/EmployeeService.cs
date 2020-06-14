@@ -1,4 +1,5 @@
-﻿using Aot.Hrms.Contracts.Repositories;
+﻿using Aot.Hrms.Contracts;
+using Aot.Hrms.Contracts.Repositories;
 using Aot.Hrms.Contracts.Services;
 using Aot.Hrms.Dtos;
 using Aot.Hrms.Entities;
@@ -44,6 +45,11 @@ namespace Aot.Hrms.Services
 
         public async Task<EmployeeDto> RegisterAsync(RegisterEmployeeRequest request)
         {
+            var existingEmployee = _employeeRepository.GetByEmail(request.Email);
+
+            if (existingEmployee != null)
+                throw new InsertFailedException("Email already existing in the System!");
+
             var id = Guid.NewGuid().ToString();
             var employee = new Employee
             {
@@ -58,7 +64,7 @@ namespace Aot.Hrms.Services
             };
 
             await _employeeRepository.CreateAsync(employee);
-            
+
             return MapEmployeeDto(employee);
         }
 

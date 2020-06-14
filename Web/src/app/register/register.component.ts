@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { first, switchMap } from 'rxjs/operators';
 import { AuthenticationService } from '../_services';
 
 @Component({
@@ -15,6 +15,10 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  get f() { return this.registerForm.controls; }
+  name: string;
+  email: string;
+  state: string
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,19 +26,18 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService
 ) { 
-    // redirect to home if already logged in
-    // if (this.authenticationService.currentUserValue) { 
-    //     this.router.navigate(['/']);
-    // }
+  console.log('Called Constructor');
+  this.route.queryParams.subscribe(params => {
+      this.name = params['name'];
+      this.email = params['email'];
+      this.state = params['state'];
+  });
 }
-
-    // convenience getter for easy access to form fields
-get f() { return this.registerForm.controls; }
 
 ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      name: [null, Validators.required],  
-      email: ['', Validators.required],
+      name: [this.name, Validators.required],  
+      email: [this.email, Validators.required],
       username: ['', Validators.required],
       password: ['', Validators.required]        
     });    
@@ -43,20 +46,15 @@ ngOnInit() {
   onRegisterClick(){
     this.submitted = true;
 
-    console.log(this.f.name.value);
-    console.log(this.f.email.value);
-    console.log(this.f.username.value);
-    console.log(this.f.password.value);
-
-    // stop here if form is invalid
     if (this.registerForm.invalid) {
         return;
     }
-  this.authenticationService.register(this.f.name.value, this.f.email.value, this.f.username.value, this.f.password.value)
+    
+    this.authenticationService.register(this.f.name.value, this.f.email.value, this.f.username.value, this.f.password.value, this.state)
       .pipe(first())
       .subscribe(
           data => {
-            //this.router.navigate(['/']);
+            this.router.navigate(['/login']);
           },
           error => {
               this.error = error;

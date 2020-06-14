@@ -1,4 +1,5 @@
 ﻿using Aot.Hrms.Contracts.Repositories;
+using Aot.Hrms.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,12 @@ namespace Aot.Hrms.Repositories
         {
             using var context = new AotDBContext();
             return context.User.SingleOrDefault(x => x.Username.ToLower() == username.ToLower() && x.Password == password);
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            using var context = new AotDBContext();
+            return context.User.SingleOrDefault(x => x.Username.ToLower() == username.ToLower());
         }
     }
 }

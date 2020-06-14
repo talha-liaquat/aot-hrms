@@ -24,5 +24,11 @@ namespace Aot.Hrms.Repositories
             skills = context.Skill.ToList();
             return skills;
         }
+
+        public Skill GetSkillByTitle(string title)
+        {
+            using var context = new AotDBContext();
+            return context.Skill.SingleOrDefault(x => x.Title.ToLower() == title.ToLower());
+        }
     }
 }

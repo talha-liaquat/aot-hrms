@@ -34,8 +34,8 @@ export class AuthenticationService {
             }));
     }
 
-    register(name: string, email: string, username: string, password: string) {
-        return this.http.post<any>(environment.apiBaseUrl + "v1/identity/register", { name, email, username, password }, {
+    register(name: string, email: string, username: string, password: string, state: string) {
+        return this.http.post<any>(environment.apiBaseUrl + "v1/identity/register", { name, email, username, password, state}, {
             headers: new HttpHeaders({
                  'Content-Type':  'application/json'
                })

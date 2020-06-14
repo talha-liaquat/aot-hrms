@@ -25,5 +25,7 @@ namespace Aot.Hrms.Dtos
         [Required]
         [StringLength(250)]
         public string Email { get; set; }
+        [Required]
+        public string State { get; set; }
     }
 }

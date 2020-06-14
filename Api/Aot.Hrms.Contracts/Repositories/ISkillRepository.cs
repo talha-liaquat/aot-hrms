@@ -11,5 +11,6 @@ namespace Aot.Hrms.Contracts.Repositories
     {
         public Task<int> CreateAsync(Entities.Skill skill);
         public IList<Skill> GetAll();
+        public Entities.Skill GetSkillByTitle(string title);
     }
 }

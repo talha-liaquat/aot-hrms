@@ -16,44 +16,11 @@ namespace Aot.Hrms.Api
     {
         public static void Main(string[] args)
         {
-            using (var context = new AotDBContext())
-            {
-                context.Database.EnsureCreated();
-
-                if (!context.User.Any(x => x.Username == "admin"))
-                {
-                    var employeeId = Guid.NewGuid().ToString();
-                    context.Employee.Add(new Entities.Employee
-                    {
-                        Id = employeeId,
-                        CreatedBy = employeeId,
-                        CreateOn = DateTime.Now,
-                        Email = "talha.liaquat@gmail.com",
-                        IsActive = true,
-                        IsAdmin = true,
-                        Name = "admin",
-                        IsEmailVerified = true
-                    });
-
-                    var userId = Guid.NewGuid().ToString();
-                    context.User.Add(new Entities.User
-                    {
-                        Id = userId,
-                        CreatedBy = employeeId,
-                        CreateOn = DateTime.Now,
-                        EmployeeId = employeeId,
-                        IsActive = true,
-                        Name = "admin",
-                        Password = "admin",
-                        Username = "admin",
-                        Email = "talha.liaquat@gmail.com"
-                    });
-                }
-                context.SaveChanges();
-            }
-
-            //PrintData();
-
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false)
+                .Build();
+            
+            AotDBContext.Initialize(config["SecurityConfiguraiton:HashKey"]);
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -63,108 +30,5 @@ namespace Aot.Hrms.Api
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
-        private static void InsertData()
-        {
-            using (var context = new LibraryContext())
-            {
-                // Creates the database if not exists
-                context.Database.EnsureCreated();
-                // Adds a publisher
-                var publisher = new Publisher
-                {
-                    Name = "Mariner Books"
-                };
-                context.Publisher.Add(publisher);
-
-                // Adds some books
-                context.Book.Add(new Book
-                {
-                    ISBN = "978-0544003415",
-                    Title = "The Lord of the Rings",
-                    Author = "J.R.R. Tolkien",
-                    Language = "English",
-                    Pages = 1216,
-                    Publisher = publisher
-                });
-                context.Book.Add(new Book
-                {
-                    ISBN = "978-0547247762",
-                    Title = "The Sealed Letter",
-                    Author = "Emma Donoghue",
-                    Language = "English",
-                    Pages = 416,
-                    Publisher = publisher
-                });
-
-                // Saves changes
-                context.SaveChanges();
-            }
-        }
-
-        private static void PrintData()
-        {
-            // Gets and prints all books in database
-            using (var context = new LibraryContext())
-            {
-                var books = context.Book
-                  .Include(p => p.Publisher);
-                foreach (var book in books)
-                {
-                    var data = new StringBuilder();
-                    data.AppendLine($"ISBN: {book.ISBN}");
-                    data.AppendLine($"Title: {book.Title}");
-                    data.AppendLine($"Publisher: {book.Publisher.Name}");
-                    Console.WriteLine(data.ToString());
-                }
-            }
-        }
-    }
-    public class Book
-    {
-        public string ISBN { get; set; }
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public string Language { get; set; }
-        public int Pages { get; set; }
-        public virtual Publisher Publisher { get; set; }
-    }
-
-    public class Publisher
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public virtual ICollection<Book> Books { get; set; }
-    }
-
-    public class LibraryContext : DbContext
-    {
-        public DbSet<Book> Book { get; set; }
-
-        public DbSet<Publisher> Publisher { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySQL("server=127.0.0.1;database=testapp;user=root;password=helloworld;port=3308");
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Publisher>(entity =>
-            {
-                entity.HasKey(e => e.ID);
-                entity.Property(e => e.Name).IsRequired();
-            });
-
-            modelBuilder.Entity<Book>(entity =>
-            {
-                entity.HasKey(e => e.ISBN);
-                entity.Property(e => e.Title).IsRequired();
-                entity.HasOne(d => d.Publisher)
-                  .WithMany(p => p.Books);
-            });
-        }
     }
 }

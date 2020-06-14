@@ -23,6 +23,12 @@ namespace Aot.Hrms.Repositories
             return context.Employee.SingleOrDefault(x => x.Id == id && x.IsActive);
         }
 
+        public Employee GetByEmail(string email)
+        {
+            using var context = new AotDBContext();
+            return context.Employee.SingleOrDefault(x => x.Email == email);
+        }
+
         public async Task<int> UpdateAsync(Employee employee)
         {
             using var context = new AotDBContext();

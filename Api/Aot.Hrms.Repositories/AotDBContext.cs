@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Aot.Hrms.Contracts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Linq;
 
 namespace Aot.Hrms.Repositories
 {
@@ -63,10 +66,53 @@ namespace Aot.Hrms.Repositories
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Name).IsRequired();
+                entity.Property(e => e.Username).IsRequired();
                 entity.Property(e => e.EmployeeId).IsRequired();
                 entity.Property(e => e.IsActive).HasDefaultValue(true);
                 entity.Property(e => e.CreateOn).HasDefaultValue(DateTime.UtcNow);
             });
+        }
+
+        public static void Initialize(string hashKey)
+        {
+            using (var context = new AotDBContext())
+            {
+                context.Database.EnsureCreated();
+
+                if (!context.User.Any(x => x.Username == "admin"))
+                {
+                    var employeeId = Guid.NewGuid().ToString();
+                    context.Employee.Add(new Entities.Employee
+                    {
+                        Id = employeeId,
+                        CreatedBy = employeeId,
+                        CreateOn = DateTime.Now,
+                        Email = "talha.liaquat@gmail.com",
+                        IsActive = true,
+                        IsAdmin = true,
+                        Name = "admin",
+                        IsEmailVerified = true
+                    });
+
+                    var userId = Guid.NewGuid().ToString();
+                    var username = "admin";
+                    var password = CryptoHelper.Hash(userId + username, hashKey);
+
+                    context.User.Add(new Entities.User
+                    {
+                        Id = userId,
+                        CreatedBy = employeeId,
+                        CreateOn = DateTime.Now,
+                        EmployeeId = employeeId,
+                        IsActive = true,
+                        Name = username,
+                        Username = username,
+                        Password = password,
+                        Email = "talha.liaquat@gmail.com"
+                    });
+                }
+                context.SaveChanges();
+            }
         }
     }
 }

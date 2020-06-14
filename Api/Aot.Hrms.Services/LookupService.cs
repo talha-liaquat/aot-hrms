@@ -1,4 +1,5 @@
-﻿using Aot.Hrms.Contracts.Repositories;
+﻿using Aot.Hrms.Contracts;
+using Aot.Hrms.Contracts.Repositories;
 using Aot.Hrms.Contracts.Services;
 using Aot.Hrms.Dtos;
 using System;
@@ -19,6 +20,11 @@ namespace Aot.Hrms.Services
 
         public async Task<SkillDto> CreateSkillAsync(RegisterSkillRequest request)
         {
+            var existingSkill = _skillRepository.GetSkillByTitle(request.Title);
+
+            if (existingSkill != null)
+                throw new InsertFailedException("Skill already added in the System!");
+
             var newSkill = new Entities.Skill
             {
                 Id = Guid.NewGuid().ToString(),
@@ -37,7 +43,6 @@ namespace Aot.Hrms.Services
 
         public IList<SkillDto> GetAllSkills()
         {
-            //TODO: User Automapper
             return _skillRepository.GetAll().Select(x => new SkillDto { Id = x.Id, Title = x.Title })?.ToList();
         }
     }

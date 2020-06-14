@@ -8,7 +8,7 @@ namespace Aot.Hrms.Contracts.Services
 {
     public interface IUserService
     {
-        public Task<string> RegisterUserAsync(RegisterUserRequest request);
+        public Task<string> RegisterUserAsync(RegisterUserRequest request, string employeeId);
         public (string userId, string employeeId)? Authenticate(LoginRequest request);
     }
 }

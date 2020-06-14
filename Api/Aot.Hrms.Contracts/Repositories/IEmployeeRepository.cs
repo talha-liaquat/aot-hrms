@@ -10,5 +10,6 @@ namespace Aot.Hrms.Contracts.Repositories
         public Task<int> CreateAsync(Entities.Employee employee);
         public Task<int> UpdateAsync(Entities.Employee employee);
         public Entities.Employee GetById(string id);
+        public Entities.Employee GetByEmail(string email);
     }
 }

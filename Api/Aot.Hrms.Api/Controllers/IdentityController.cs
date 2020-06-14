@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Aot.Hrms.Contracts;
 using Aot.Hrms.Contracts.Services;
 using Aot.Hrms.Dtos;
 using Microsoft.AspNetCore.Authorization;
@@ -84,7 +85,9 @@ namespace Aot.Hrms.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> RegisterUserRequestAsync([FromBody]RegisterUserRequest request)
         {
-            var token = await _userService.RegisterUserAsync(request);
+            var stateObj = CryptoHelper.Deserialize<EmailVerificationDto>(CryptoHelper.Decrypt(CryptoHelper.Decode(request.State), _configuration["SecurityConfiguraiton:EncryptionKey"]));
+
+            var token = await _userService.RegisterUserAsync(request, stateObj.EmployeeId);
 
             return Ok(token);
         }

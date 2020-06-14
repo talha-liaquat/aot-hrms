@@ -1,1 +1,27 @@
-<p>search works!</p>
+<h4 class="card-header">Search Employeed by Skills</h4>
+<ngx-spinner></ngx-spinner>
+<form #form='ngForm' (ngSubmit)="onSubmit(form)">
+    <div class="form-group">         
+        <ejs-multiselect id='localData' name='title'  #local='ngModel' [(value)]='id' [(ngModel)]='value' [dataSource]='skills' [fields]='localFields' [placeholder]='localWaterMark'></ejs-multiselect>
+
+        <button type="submit" ejs-button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Search
+        </button>
+
+    </div>
+  </form>
+
+  <table class="table table-hover">
+    <tr style="font-weight: bold">
+      <td>Employee Id</td>
+      <td>Name</td>
+      <td>Email</td>
+    </tr>
+    <tr *ngFor="let employee of employees; let i = index" [attr.data-index]="i">
+      
+      <td>{{ employee.id }}</td>
+      <td>{{ employee.name }}</td>
+      <td>{{ employee.email }}</td>
+    </tr>
+  </table>

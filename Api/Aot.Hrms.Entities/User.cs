@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using Index = Microsoft.EntityFrameworkCore.Metadata.Internal.Index;
 
 namespace Aot.Hrms.Entities
 {
@@ -16,6 +19,7 @@ namespace Aot.Hrms.Entities
 
         [Required]
         [StringLength(250)]
+        [Index(IsUnique = true)]
         public string Username { get; set; }
 
         [Required]
