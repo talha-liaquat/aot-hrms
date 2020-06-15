@@ -31,6 +31,7 @@ services:
     build: ./Aot.Hrms.Web
     depends_on:
       - aot.hrms.api
+      - db
     volumes:
       - './Aot.Hrms.Web:/usr/src/app' 
     ports: 
