@@ -68,8 +68,7 @@ export class EmployeeService {
 
   getClaims(key: string){
       var currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-      var decoded = jwt_decode(currentUserSubject.value.Token); 
-      console.log(decoded);
+      var decoded = jwt_decode(currentUserSubject.value.token);
       return decoded[key];
   }
 }

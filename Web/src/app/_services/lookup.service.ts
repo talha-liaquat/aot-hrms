@@ -46,7 +46,6 @@ export class LookupService {
   }
 
   getUserId(){
-      var currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-      console.log(currentUserSubject.value["userId"]);
+      var currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));      
   }
 }

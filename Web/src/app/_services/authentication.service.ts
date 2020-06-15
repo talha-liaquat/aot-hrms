@@ -52,12 +52,13 @@ export class AuthenticationService {
             }));
     }
 
-    getClaims(key: string){
-        console.log('checking claims');
+    getClaims(key: string){        
         var currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        var decoded = jwt_decode(currentUserSubject.value.token); 
-        console.log(decoded);
-        return decoded[key];
+        if(currentUserSubject.value){
+            var decoded = jwt_decode(currentUserSubject.value.token);
+            return decoded[key];
+        }
+        return null;
     }
 
     logout() {

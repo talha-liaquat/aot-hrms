@@ -23,11 +23,7 @@ export class CreategroupComponent implements OnInit {
     private router: Router,
     private groupService: GroupService
 ) { 
-  console.log();
-    // redirect to home if already logged in
-    // if (this.groupService.currentUserValue) { 
-    //     this.router.navigate(['/']);
-    // }
+
 }
 
   ngOnInit() {   
@@ -35,14 +31,9 @@ export class CreategroupComponent implements OnInit {
 
   OnCreateClick(){
     this.submitted = true;
-
-    // stop here if form is invalid
-    // if (this.loginForm.invalid) {
-    //     return;
-    // }
     
     this.loading = true;
-    this.groupService.create(this.groupTitle, this.groupService.currentUserValue.Token)
+    this.groupService.create(this.groupTitle, this.groupService.currentUserValue.token)
         .pipe(first())
         .subscribe(
             data => {
