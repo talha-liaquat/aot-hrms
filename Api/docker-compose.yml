@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'aotdb'
+      MYSQL_USER: 'aotuser'
+      MYSQL_PASSWORD: 'q1w2e3'
+      MYSQL_ROOT_PASSWORD: 'q1w2e3'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+  aot.hrms.api:
+    image: ${DOCKER_REGISTRY-}aothrmsapi
+    build:
+      context: .
+      dockerfile: Aot.Hrms.Api/Dockerfile
+    ports:
+      - '61653:80'
+    expose:
+      - '61653'
+  aot.hrms.web:
+    build:
+      context: .
+      dockerfile: Aot.Hrms.Web/Dockerfile
+    ports:
+      - '4200:4200'
+    expose:
+      - '4200'
+volumes:
+  my-db:

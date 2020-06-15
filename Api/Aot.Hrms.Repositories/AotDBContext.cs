@@ -20,7 +20,7 @@ namespace Aot.Hrms.Repositories
 
         public AotDBContext()
         {
-            ConnectionString = "server=127.0.0.1;database=testapp;user=root;password=helloworld;port=3308";
+            ConnectionString = "server=db;database=aotdb;user=root;password=q1w2e3;port=3306";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

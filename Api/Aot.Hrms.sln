@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aot.Hrms.Repositories", "Ao
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aot.Hrms.Entities", "Aot.Hrms.Entities\Aot.Hrms.Entities.csproj", "{478ADAE5-0A1A-4836-BF3D-889D09D90537}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3A657D5D-7559-4E84-8BCC-D7607754CAD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{478ADAE5-0A1A-4836-BF3D-889D09D90537}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{478ADAE5-0A1A-4836-BF3D-889D09D90537}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{478ADAE5-0A1A-4836-BF3D-889D09D90537}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A657D5D-7559-4E84-8BCC-D7607754CAD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A657D5D-7559-4E84-8BCC-D7607754CAD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A657D5D-7559-4E84-8BCC-D7607754CAD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A657D5D-7559-4E84-8BCC-D7607754CAD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
